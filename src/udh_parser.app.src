@@ -1,0 +1,15 @@
+{application, udh_parser,
+ [{description, "Parser of User Data Header for concatenated SMSs"},
+  {vsn, "1.0.0"},
+  {registered, []},
+  {applications,
+   [kernel,
+    stdlib
+   ]},
+  {env,[]},
+  {modules, []},
+
+  {maintainers, []},
+  {licenses, ["Apache 2.0"]},
+  {links, []}
+ ]}.

@@ -1,5 +1,7 @@
 # udh_parser : parser of User Data Header for concatenated SMSs
 
+[![Build Status](https://travis-ci.org/K2InformaticsGmbH/udh_parser.svg?branch=master)](https://travis-ci.org/K2InformaticsGmbH/udh_parser) [![Coverage Status](https://coveralls.io/repos/github/K2InformaticsGmbH/udh_parser/badge.svg?branch=master)](https://coveralls.io/github/K2InformaticsGmbH/udh_parser?branch=master)
+
 ## [Description](https://en.wikipedia.org/wiki/Concatenated_SMS#Sending_a_concatenated_SMS_using_a_User_Data_Header)
 One way of sending concatenated SMS (CSMS) is to split the message into 153 7-bit character parts (134 octets), and sending each part with a User Data Header (UDH) tacked onto the beginning. A UDH can be used for various purposes and its contents and size varies accordingly, but a UDH for concatenating SMSes look like this:
 
