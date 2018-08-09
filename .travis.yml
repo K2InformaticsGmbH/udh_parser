@@ -11,4 +11,4 @@ script:
   - ./rebar3 compile
   - ./rebar3 eunit
   - ./rebar3 cover
-  - ./rebar3 coveralls send
+  - ./rebar3 as test coveralls send
