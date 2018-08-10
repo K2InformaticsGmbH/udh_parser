@@ -18,7 +18,8 @@ unpack(#{<<"short_message">> := SM0} = Pdu) ->
 					 end, #{}, UDH),
 	if map_size(UDH) > 1 -> Pdu#{<<"short_message">> => SM, <<"udh">> => UDH1};
 		true -> Pdu#{<<"short_message">> => SM}
-	end.
+	end;
+unpack(Pdu) -> Pdu.
 
 -define(HEADERS, [udh, <<"udh">>]).
 
