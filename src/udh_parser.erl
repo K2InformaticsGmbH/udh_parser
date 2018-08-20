@@ -23,13 +23,13 @@ unpack(#{<<"short_message">> := SM0} = Pdu) ->
 	end;
 % ucp
 unpack(#{xser := XSERs} = Pdu) ->
-	case {udh_xser(XSERs, Pdu), Pdu} of
+	case {xser(XSERs, Pdu), Pdu} of
 		{NewPdu, #{xser := []}} -> NewPdu;
 		{#{xser := []} = NewPdu, Pdu} -> maps:without([xser], NewPdu);
 		{NewPdu, Pdu} -> NewPdu
 	end;
 unpack(#{<<"xser">> := XSERs} = Pdu) ->
-	case {udh_xser(XSERs, Pdu), Pdu} of
+	case {xser(XSERs, Pdu), Pdu} of
 		{NewPdu, #{<<"xser">> := []}} -> NewPdu;
 		{#{<<"xser">> := []} = NewPdu, Pdu} -> maps:without([<<"xser">>], NewPdu);
 		{NewPdu, Pdu} -> NewPdu
@@ -207,19 +207,19 @@ unsplit(#{bit := 16, len := 6, info_elm_id := 8, hdr_len := 4,
 			true 		-> <<6, 8, 4, R:16, C:8, N:8, SM/binary>>
 		end.
 
-udh_xser(XSERs, Pdu) when is_list(XSERs) ->
-	lists:foldl(fun udh_xser/2, Pdu, XSERs);
-udh_xser(#{type := 1, data := Data} = XSER, #{xser := NewXSREs} = PduMap) ->
+xser(XSERs, Pdu) when is_list(XSERs) ->
+	lists:foldl(fun xser/2, Pdu, XSERs);
+xser(#{type := 1, data := Data} = XSER, #{xser := NewXSREs} = PduMap) ->
 	{UDH, []} = split(Data),
 	PduMap#{udh => UDH, xser => NewXSREs -- [XSER]};
-udh_xser(#{<<"type">> := 1, <<"data">> := Data} = XSER,
+xser(#{<<"type">> := 1, <<"data">> := Data} = XSER,
 			#{<<"xser">> := NewXSREs} = PduMap) ->
 	{UDH0, []} = split(Data),
 	UDH = maps:fold(fun(K, V, M) ->
 						M#{atom_to_binary(K, utf8) => V}
 					end, #{}, UDH0),
 	PduMap#{<<"udh">> => UDH, <<"xser">> => NewXSREs -- [XSER]};
-udh_xser(_, PduConst) -> PduConst.
+xser(_, PduConst) -> PduConst.
 
 %------------------------------------------------------------------------------
 -ifdef(TEST).
